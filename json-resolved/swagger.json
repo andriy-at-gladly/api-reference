@@ -1,0 +1,124 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is a simple API",
+    "version" : "3",
+    "title" : "The Customer Profile is an object representing your customer’s contact, transactional, and custom attributes"
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/api/v1/",
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/customer-profiles" : {
+      "get" : {
+        "summary" : "creates a customer profile",
+        "description" : "Creates a customer profile in Gladly",
+        "operationId" : "readCustomerProfile",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "customerProfile",
+          "description" : "Customer profile to add",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CustomerProfile"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "profile created"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "409" : {
+            "description" : "an existing profile already exists"
+          }
+        }
+      },
+      "post" : {
+        "summary" : "creates a customer profile",
+        "description" : "Creates a customer profile in Gladly",
+        "operationId" : "createCustomerProfile",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "customerProfile",
+          "description" : "Customer profile to add",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CustomerProfile"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "profile created"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "409" : {
+            "description" : "an existing profile already exists"
+          }
+        }
+      }
+    },
+    "/conversations" : {
+      "post" : {
+        "summary" : "creates a conversation",
+        "description" : "Creates a customer profile in Gladly",
+        "operationId" : "createConversations",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "customerProfile",
+          "description" : "Customer profile to add",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CustomerProfile"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "profile created"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "409" : {
+            "description" : "an existing profile already exists"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "CustomerProfile" : {
+      "type" : "object",
+      "required" : [ "address", "id", "name" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Mary Jane"
+        },
+        "address" : {
+          "type" : "string",
+          "example" : "100 Main St, San Francisco, CA 94904"
+        }
+      },
+      "example" : {
+        "address" : "100 Main St, San Francisco, CA 94904",
+        "name" : "Mary Jane",
+        "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+      }
+    }
+  }
+}
