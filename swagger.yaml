@@ -1,0 +1,88 @@
+swagger: '2.0'
+info:
+  description: >-
+    The Gladly API makes it easy to add contextuala data to conversations in
+    Gladly.    For this sample, you can use the api key `gladly` to test the
+    authorization filters.
+  version: 1.0.0
+  title: API Reference
+host: organization.gladly.com
+basePath: /api/v1
+tags:
+  - name: customer
+    description: customer and customer transaction data integration
+  - name: telephony
+    description: Computer telephony integration
+  - name: reporting
+    description: Usage data and analytics
+  - name: conversations
+    description: Cross-channel communications with customers
+  - name: tasks
+    description: Agent workflows
+  - name: organization
+    description: Agent and inbox management
+  - name: events
+    description: Callbacks in response to acitivies in Gladly
+  - name: customer lookup spi
+    description: API customers can implement for real-time consumer data lookups 
+schemes:
+  - https
+paths:
+  /customer-profiles:
+    get:
+      tags:
+        - customer
+      summary: Search for customer profiles
+      produces:
+        - application/json
+      parameters:
+        - name: email
+          in: query
+          description: one of customer's email addresses
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/customer-profile'
+    post:
+      tags:
+        - customer
+      summary: Create a customer profile
+    patch:
+      tags:
+        - customer
+      summary: Update a customer profile
+  '/customer-profiles/{id}':
+    get:
+      tags:
+        - customer
+      summary: Retreive a customer profile
+definitions:
+  customer-profile:
+    type: object
+    properties:
+      id:
+        type: string
+        description: >-
+          Gladly customer id, a URL-safe base64 encoded UUID unique across all
+          customers.
+      username:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      userStatus:
+        type: integer
+        format: int32
+        description: User Status
