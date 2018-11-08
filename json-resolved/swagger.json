@@ -1,123 +1,133 @@
 {
-  "swagger" : "2.0",
-  "info" : {
-    "description" : "This is a simple API",
-    "version" : "3",
-    "title" : "The Customer Profile is an object representing your customer’s contact, transactional, and custom attributes"
+  "swagger": "2.0",
+  "info": {
+    "description": "The Gladly API makes it easy to add contextuala data to conversations in Gladly.",
+    "version": "1.0.0",
+    "title": "API Reference"
   },
-  "host" : "virtserver.swaggerhub.com",
-  "basePath" : "/api/v1/",
-  "schemes" : [ "https" ],
-  "paths" : {
-    "/customer-profiles" : {
-      "get" : {
-        "summary" : "creates a customer profile",
-        "description" : "Creates a customer profile in Gladly",
-        "operationId" : "readCustomerProfile",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "customerProfile",
-          "description" : "Customer profile to add",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/CustomerProfile"
+  "host": "organization.gladly.com",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "customer",
+      "description": "customer and customer transaction data integration"
+    },
+    {
+      "name": "telephony",
+      "description": "Computer telephony integration"
+    },
+    {
+      "name": "reporting",
+      "description": "Usage data and analytics"
+    },
+    {
+      "name": "conversations",
+      "description": "Cross-channel communications with customers"
+    },
+    {
+      "name": "tasks",
+      "description": "Agent workflows"
+    },
+    {
+      "name": "organization",
+      "description": "Agent and inbox management"
+    },
+    {
+      "name": "events",
+      "description": "Callbacks in response to acitivies in Gladly"
+    },
+    {
+      "name": "customer lookup spi",
+      "description": "real-time consumer data lookup"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/customer-profiles": {
+      "get": {
+        "tags": [
+          "customer"
+        ],
+        "summary": "Search for customer profiles",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "one of customer's email addresses",
+            "required": false,
+            "type": "string"
           }
-        } ],
-        "responses" : {
-          "201" : {
-            "description" : "profile created"
-          },
-          "400" : {
-            "description" : "invalid input, object invalid"
-          },
-          "409" : {
-            "description" : "an existing profile already exists"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/customer-profile"
+              }
+            }
           }
         }
       },
-      "post" : {
-        "summary" : "creates a customer profile",
-        "description" : "Creates a customer profile in Gladly",
-        "operationId" : "createCustomerProfile",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "customerProfile",
-          "description" : "Customer profile to add",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/CustomerProfile"
-          }
-        } ],
-        "responses" : {
-          "201" : {
-            "description" : "profile created"
-          },
-          "400" : {
-            "description" : "invalid input, object invalid"
-          },
-          "409" : {
-            "description" : "an existing profile already exists"
-          }
-        }
+      "post": {
+        "tags": [
+          "customer"
+        ],
+        "summary": "Create a customer profile"
+      },
+      "patch": {
+        "tags": [
+          "customer"
+        ],
+        "summary": "Update a customer profile"
       }
     },
-    "/conversations" : {
-      "post" : {
-        "summary" : "creates a conversation",
-        "description" : "Creates a customer profile in Gladly",
-        "operationId" : "createConversations",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "customerProfile",
-          "description" : "Customer profile to add",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/CustomerProfile"
-          }
-        } ],
-        "responses" : {
-          "201" : {
-            "description" : "profile created"
-          },
-          "400" : {
-            "description" : "invalid input, object invalid"
-          },
-          "409" : {
-            "description" : "an existing profile already exists"
-          }
-        }
+    "/customer-profiles/{id}": {
+      "get": {
+        "tags": [
+          "customer"
+        ],
+        "summary": "Retreive a customer profile"
       }
     }
   },
-  "definitions" : {
-    "CustomerProfile" : {
-      "type" : "object",
-      "required" : [ "address", "id", "name" ],
-      "properties" : {
-        "id" : {
-          "type" : "string",
-          "format" : "uuid",
-          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+  "definitions": {
+    "customer-profile": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Gladly customer id, a URL-safe base64 encoded UUID unique across all customers."
         },
-        "name" : {
-          "type" : "string",
-          "example" : "Mary Jane"
+        "username": {
+          "type": "string"
         },
-        "address" : {
-          "type" : "string",
-          "example" : "100 Main St, San Francisco, CA 94904"
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "userStatus": {
+          "type": "integer",
+          "format": "int32",
+          "description": "User Status"
         }
-      },
-      "example" : {
-        "address" : "100 Main St, San Francisco, CA 94904",
-        "name" : "Mary Jane",
-        "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
       }
     }
   }
